@@ -1,10 +1,16 @@
 <?php
 	require_once 'Model.php';
 	class Controller {
-		public static function renderPage() 
-		{
-            $page = (isset($_GET['page'])) ? $_GET['page'] : 1;
-			$context = Account::findAll();
+        private static $PAGE_SIZE = 3;
+		public static function renderPage() {
+            //$page = (isset($_GET['page'])) ? $_GET['page'] : 1;
+            if (!isset($_GET['page']) || $_GET['page'] < 1)
+                header('Location: index.php?mode=read&page=1');
+            $page_amount = ceil(Account::countRows() / self::$PAGE_SIZE);
+            if ($_GET['page'] > $page_amount)
+                header("Location: index.php?mode=read&page=$page_amount");
+            $page = $_GET['page'];
+			$context = Account::findPage($page - 1 ,self::$PAGE_SIZE);
 			include 'View.php';
 		}
 
@@ -12,22 +18,30 @@
 			$user = new Account();
             Controller::validateInput("create");
             $user->fill($_POST);
-			$user->create();
-			header('Location: index.php?mode=read');
+            if (!$user->verifyEmail())
+                header("Location: index.php?mode=read&page=$_GET[page]&error=$error");    
+            else {
+                $user->create();
+                header('Location: index.php?mode=read&page=9999999999');
+            }
 		}
 
 		public static function updateAccount() {
 			$user = new Account();
             Controller::validateInput("update");
             $user->fill($_POST);
-			$user->update();
-			header('Location: index.php?mode=read');
+            if (!$user->verifyEmail())
+                header("Location: index.php?mode=read&page=$_GET[page]&error=$error");    
+            else {
+                $user->update();
+                header("Location: index.php?mode=read&page=$_GET[page]");
+            }
 		}
 
 		public static function deleteAccount() {
 			if (isset($_POST['id']))
 				Account::delete($_POST['id']);
-			header('Location: index.php?mode=read');
+			header("Location: index.php?mode=read&page=$_GET[page]");
 		}
 
         private static function validateInput($mode)
@@ -62,7 +76,7 @@
                 $error_flag = true;
             }
             if ($error_flag)
-                header("Location: index.php?mode=read&error=$error");    
+                header("Location: index.php?mode=read&page=$_GET[page]&error=$error");    
         }
 	}
 

@@ -14,7 +14,6 @@ class Account {
     private static $DATABASE_PARAMS = ['localhost','root','1337','zimlab'];
 
 	public static function findAll() : array {
-		//$mysqli = new mysqli("localhost", "root", "1337", "zimlab");
 		$mysqli = new mysqli(...self::$DATABASE_PARAMS);
 		$result = $mysqli->query("SELECT * FROM ".self::$TABLE_NAME);
 		$mysqli->close();
@@ -23,6 +22,7 @@ class Account {
 			array_push($output, $el);
 		return $output;
 	}
+
 	public static function findPage(int $page, int $size) : array {
         $start = $page * $size;
         $query = "SELECT * FROM ".self::$TABLE_NAME." LIMIT $start, $size";
@@ -34,6 +34,25 @@ class Account {
 			array_push($output, $el);
 		return $output;
 	}
+
+    public static function countRows() : int {
+        $query = "SELECT count(*) AS count FROM ".self::$TABLE_NAME;
+		$mysqli = new mysqli(...self::$DATABASE_PARAMS);
+		$result = $mysqli->query($query);
+        $output = $result->fetch_assoc()['count'];
+		$mysqli->close();
+        return $output;
+    }
+
+    public function verifyEmail() : bool {
+        $output = 0;
+        $query = "SELECT count(*) AS count FROM ".self::$TABLE_NAME." WHERE email='$this->email'";
+		$mysqli = new mysqli(...self::$DATABASE_PARAMS);
+		$result = $mysqli->query($query);
+        $output = $result->fetch_assoc()['count'];
+		$mysqli->close();
+        return ($output == 0)? true : false;
+    }
 
 	public function create() {
 		$array_representation = (array)$this;

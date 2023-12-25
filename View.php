@@ -1,17 +1,17 @@
 <table border="1">
 <tr>
-	<td>first_name</td>
-	<td>last_name</td>
-	<td>email</td>
-	<td>company_name</td>
-	<td>position</td>
-	<td>phone1</td>
-	<td>phone2</td>
-	<td>phone3</td>
+	<td>First Name</td>
+	<td>Last Name</td>
+	<td>Email</td>
+	<td>Company</td>
+	<td>Position</td>
+	<td>Phone 1</td>
+	<td>Phone 2</td>
+	<td>Phone 3</td>
 </tr>
 <?php foreach ($context as $account) { ?>
 <tr>
-	<form method="POST" action="index.php?mode=update">
+	<form method="POST" action="index.php?mode=update&page=<?= $_GET['page'] ?>">
 		<td><input name="first_name" value=<?= $account->first_name ?> ></td>
 		<td><input name="last_name" value=<?= $account->last_name ?> ></td>
 		<td><input name="email" value=<?= $account->email ?> ></td>
@@ -25,7 +25,7 @@
 				<input type="submit" name="update" value="Update"/>
 		</td>
 	</form>
-	<form method="POST" action="index.php?mode=delete">
+    <form method="POST" action="index.php?mode=delete&page=<?= $_GET['page'] ?>">
 		<td>
 			<input hidden name="id" value=<?= $account->id ?> />
 			<input type="submit" name="delete" value="Delete"/>
@@ -33,7 +33,7 @@
 	</form>
 </tr>
 <?php } ?>
-<form method="POST" action="index.php?mode=create">
+<form method="POST" action="index.php?mode=create&page=<?= $_GET['page'] ?>">
 	<tr>
 		<td><input type="text" name="first_name" required></td>
 		<td><input type="text" name="last_name" required></td>
@@ -48,3 +48,18 @@
 </form>
 </table>
 
+<table border="1">
+    <tr>
+        <td>
+            <a href="index.php?mode=read&page=<?= $_GET['page']-1 ?>">Back</a>  
+        <td>
+        <?php foreach (range(1, $page_amount) as $page_number) { ?>
+            <td>
+                <a href="index.php?mode=read&page=<?= $page_number ?>"><?= $page_number ?></a>
+            </td>
+        <?php } ?>
+        <td>
+            <a href="index.php?mode=read&page=<?= $_GET['page']+1 ?>">Next</a>  
+        <td>
+    </tr>
+</table>
