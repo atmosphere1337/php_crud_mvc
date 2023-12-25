@@ -1,13 +1,12 @@
 <?php
-	include 'controller.php';
+	require_once 'Controller.php';
 	$route = $_GET['mode'];
 	if ($route == 'read' || !isset($_GET['mode']))
-		Controller::render_page();
+		Controller::renderPage();
 	else if ($route == 'create')
-		Controller::add_account();
+		Controller::addAccount();
 	else if ($route == 'update')
-		Controller::update_account();
+		Controller::updateAccount();
 	else if ($route == 'delete')
-		Controller::delete_account();
-?>
+		Controller::deleteAccount();
 

@@ -12,22 +12,22 @@
 <?php foreach ($context as $account) { ?>
 <tr>
 	<form method="POST" action="index.php?mode=update">
-		<td><input name="first_name" value=<?php echo $account->first_name; ?> ></td>
-		<td><input name="last_name" value=<?php echo $account->last_name; ?> ></td>
-		<td><input name="email" value=<?php echo $account->email; ?> ></td>
-		<td><input name="company_name" value=<?php echo $account->company_name; ?> ></td>
-		<td><input name="position" value=<?php echo $account->position; ?> ></td>
-		<td><input name="phone1" value=<?php echo $account->phone1; ?> ></td>
-		<td><input name="phone2" value=<?php echo $account->phone2; ?> ></td>
-		<td><input name="phone3" value=<?php echo $account->phone3; ?> ></td>
+		<td><input name="first_name" value=<?= $account->first_name ?> ></td>
+		<td><input name="last_name" value=<?= $account->last_name ?> ></td>
+		<td><input name="email" value=<?= $account->email ?> ></td>
+		<td><input name="company_name" value=<?= $account->company_name ?> ></td>
+		<td><input name="position" value=<?= $account->position ?> ></td>
+		<td><input name="phone1" value=<?= $account->phone1 ?> ></td>
+		<td><input name="phone2" value=<?= $account->phone2 ?> ></td>
+		<td><input name="phone3" value=<?= $account->phone3 ?> ></td>
 		<td>
-				<input hidden name="id" value=<?php echo $account->id; ?> />
+				<input hidden name="id" value=<?= $account->id ?> >
 				<input type="submit" name="update" value="Update"/>
 		</td>
 	</form>
 	<form method="POST" action="index.php?mode=delete">
 		<td>
-			<input hidden name="id" value=<?php echo $account->id; ?> />
+			<input hidden name="id" value=<?= $account->id ?> />
 			<input type="submit" name="delete" value="Delete"/>
 		</td>
 	</form>
@@ -47,4 +47,4 @@
 	<tr>
 </form>
 </table>
-<a href="other.php">Other</a>
+
