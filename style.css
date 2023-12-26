@@ -1,0 +1,35 @@
+body {
+    background-color: rgb(150, 150, 255);
+}
+
+.container {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgb(250, 150, 150);
+}
+
+.main-table {
+    background-color: rgb(150, 255, 150);
+    border-radius: 10px;
+    padding: 15px;
+}
+.paging-table {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(255, 255,80);
+}
+
+.paging-table td {
+    padding: 5px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: rgb(50, 255, 255);
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    color: white;
+}

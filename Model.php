@@ -44,14 +44,14 @@ class Account {
         return $output;
     }
 
-    public function verifyEmail() : bool {
+    public function countEmail() : int {
         $output = 0;
         $query = "SELECT count(*) AS count FROM ".self::$TABLE_NAME." WHERE email='$this->email'";
 		$mysqli = new mysqli(...self::$DATABASE_PARAMS);
 		$result = $mysqli->query($query);
         $output = $result->fetch_assoc()['count'];
 		$mysqli->close();
-        return ($output == 0)? true : false;
+        return $output;
     }
 
 	public function create() {
